@@ -1,0 +1,8 @@
+{
+  "name": "TODO_Nodejs_learning",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bselhorst/TODO_Nodejs_learning.git",
+  "author": "Bruno Selhorst <bselhorst88@gmail.com>",
+  "license": "MIT"
+}
