@@ -8,7 +8,7 @@ const users = [];
 
 //MIDDLEWARE
 function usernameVerification(request, response, next) {
-    const { username } = request.params;
+    const { username } = request.headers;
     user = users.find(user => user.username === username);
 
     if (!user) {
@@ -21,7 +21,8 @@ function usernameVerification(request, response, next) {
 }
 
 function todoVerification(request, response, next) {
-    const { username, id } = request.params;
+    const { username } = request.headers;
+    const { id } = request.params;
     user = users.find(user => user.username === username);
     todo = user.todos.find(todo => todo.id === id);
     if (!todo) {
@@ -32,6 +33,7 @@ function todoVerification(request, response, next) {
 
     return next();
 }
+//END OF MIDDLEWARES
 
 app.get('/', (request, response) => {
     return response.json({ message: "HelloWorld" });
@@ -59,12 +61,12 @@ app.post("/users", (request, response) => {
     return response.status(200).send();
 });
 
-app.get("/todos/:username", usernameVerification, (request, response) => {
+app.get("/todos", usernameVerification, (request, response) => {
     const { user } = request;
     return response.json(user.todos);
 });
 
-app.post("/todos/:username", usernameVerification, (request, response) => {
+app.post("/todos", usernameVerification, (request, response) => {
     const { user } = request;
     const { title, description } = request.body;
     user.todos.push({
@@ -78,7 +80,7 @@ app.post("/todos/:username", usernameVerification, (request, response) => {
     return response.status(200).json({ error: "TODO created!" });
 });
 
-app.put("/todos/:username/:id", todoVerification, (request, response) => {
+app.put("/todos/:id", todoVerification, (request, response) => {
     const { todo } = request;
     const { title, description } = request.body;
     todo.title = title;
@@ -87,7 +89,7 @@ app.put("/todos/:username/:id", todoVerification, (request, response) => {
     return response.status(200).json(todo);
 });
 
-app.delete("/todos/:username/:id", todoVerification, (request, response) => {
+app.delete("/todos/:id", todoVerification, (request, response) => {
     const { user, todo } = request;
 
     user.todos = user.todos.filter(function (item) {
@@ -96,7 +98,7 @@ app.delete("/todos/:username/:id", todoVerification, (request, response) => {
     return response.status(204).send();
 });
 
-app.patch("/todos/:username/:id", todoVerification, (request, response) => {
+app.patch("/todos/:id", todoVerification, (request, response) => {
     const { todo } = request;
     todo.done = !todo.done;
 
