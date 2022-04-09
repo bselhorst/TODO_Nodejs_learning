@@ -4,5 +4,15 @@
   "main": "index.js",
   "repository": "https://github.com/bselhorst/TODO_Nodejs_learning.git",
   "author": "Bruno Selhorst <bselhorst88@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
